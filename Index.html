@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./assets/img/logo.png" type="image/x-icon">
     <title>Atul Khanal</title>
+    <script>
+        $(document).ready(function() {
+            $(#press).click(function() {
+                  $("#test").load();
+            });                   
+        });
+    </script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -112,7 +119,12 @@
                 <img src="./assets/img/student.svg" class="image" alt="">
             </div>
         </div>
-
+        <div id="lab">
+            <p> thsi is my project </p>
+        </div>
+        <div>
+            <button id="press"> click to change </button>
+        </div>
     </div>
 </body>
 </html>
