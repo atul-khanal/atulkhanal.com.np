@@ -20,9 +20,6 @@
       "@unhead/vue": [
         "../node_modules/@unhead/vue"
       ],
-      "vue": [
-        "../node_modules/vue"
-      ],
       "@vue/runtime-core": [
         "../node_modules/@vue/runtime-core"
       ],
@@ -83,15 +80,6 @@
       "vue-demi": [
         "../../../node_modules/nuxt/dist/app/compat/vue-demi"
       ],
-      "#mdc-configs": [
-        "./mdc-configs"
-      ],
-      "#mdc-highlighter": [
-        "./mdc-highlighter"
-      ],
-      "#mdc-imports": [
-        "./mdc-imports"
-      ],
       "#vue-router": [
         "./vue-router-stub"
       ],
@@ -99,7 +87,7 @@
         "./imports"
       ],
       "#app-manifest": [
-        "./manifest/meta/dev"
+        "./manifest/meta/dev.json"
       ],
       "#build": [
         "."
@@ -134,8 +122,7 @@
     "./nuxt.d.ts",
     "../.config/nuxt.*",
     "../**/*",
-    "../node_modules/@nuxtjs/mdc/runtime",
-    "../node_modules/@nuxt/content/runtime",
+    "../node_modules/@nuxtjs/tailwindcss/runtime",
     "../node_modules/@nuxt/devtools/runtime",
     "../node_modules/@nuxt/telemetry/runtime",
     "..",
@@ -145,8 +132,7 @@
   "exclude": [
     "../node_modules",
     "../../../node_modules/nuxt/node_modules",
-    "../node_modules/@nuxtjs/mdc/runtime/server",
-    "../node_modules/@nuxt/content/runtime/server",
+    "../node_modules/@nuxtjs/tailwindcss/runtime/server",
     "../node_modules/@nuxt/devtools/runtime/server",
     "../node_modules/@nuxt/telemetry/runtime/server",
     "../dist",
