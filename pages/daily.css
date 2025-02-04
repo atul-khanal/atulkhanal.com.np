@@ -690,6 +690,7 @@
     overflow: hidden;
     box-shadow: 0 5px 15px var(--theme-shadow);
     transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 .personal-image-card img {
@@ -722,6 +723,43 @@
 
 .personal-image-card:hover .personal-image-caption {
     transform: translateY(0);
+}
+
+/* Overlay Navigation */
+.gallery-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(74, 4, 4, 0.8);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 1002;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.gallery-nav:hover {
+    background: rgba(74, 4, 4, 1);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.gallery-nav.prev-nav {
+    left: 20px;
+}
+
+.gallery-nav.next-nav {
+    right: 20px;
+}
+
+.gallery-nav.visible {
+    display: flex;
 }
 
 /* Navigation Buttons */
@@ -988,52 +1026,104 @@
 
 .milestone-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: clamp(1rem, 3vw, 2rem);
-    padding: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
 .milestone-card {
     background: linear-gradient(145deg, #fff, var(--theme-accent));
     border: 2px solid var(--theme-primary);
     border-radius: 15px;
-    padding: clamp(1rem, 3vw, 2rem);
+    padding: 1.5rem;
     text-align: center;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 15px var(--theme-shadow);
-    transform-style: preserve-3d;
-    animation: fadeInRotate 0.8s ease-out backwards;
 }
 
-.milestone-card:nth-child(1) { animation-delay: 0.2s; }
-.milestone-card:nth-child(2) { animation-delay: 0.4s; }
-.milestone-card:nth-child(3) { animation-delay: 0.6s; }
-.milestone-card:nth-child(4) { animation-delay: 0.8s; }
-
-.milestone-card:hover {
-    transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
-    box-shadow: 0 15px 30px var(--theme-shadow);
+.milestone-image-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
 }
 
-.milestone-icon {
-    font-size: clamp(2rem, 5vw, 3rem);
-    margin-bottom: 1rem;
-    display: block;
-    transform: translateZ(20px);
-    animation: bounce 2s infinite;
+.milestone-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.milestone-upload {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.upload-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(74, 4, 4, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.upload-overlay span {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.milestone-image-container:hover .upload-overlay {
+    opacity: 1;
+}
+
+.milestone-image-container:hover .milestone-image {
+    transform: scale(1.05);
 }
 
 .milestone-card h3 {
     color: var(--theme-secondary);
     margin: 1rem 0;
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.2rem, 3vw, 1.5rem);
-    transform: translateZ(15px);
+    font-size: 1.5rem;
 }
 
 .milestone-card p {
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-    transform: translateZ(10px);
+    color: var(--text-color);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+@media screen and (max-width: 768px) {
+    .milestone-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+
+    .milestone-image-container {
+        height: 250px;
+    }
 }
 
 /* Enhanced Memory Cards */
