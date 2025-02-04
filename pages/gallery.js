@@ -1,163 +1,91 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Create overlay and close button elements
+    const imageCards = document.querySelectorAll('.personal-image-card');
+    let activeCard = null;
+
+    // Create overlay
     const overlay = document.createElement('div');
-    overlay.className = 'personal-image-overlay';
+    overlay.className = 'gallery-overlay';
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    `;
     document.body.appendChild(overlay);
 
+    // Create close button
     const closeButton = document.createElement('button');
-    closeButton.className = 'close-button';
+    closeButton.className = 'gallery-close';
     closeButton.innerHTML = '×';
+    closeButton.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 40px;
+        cursor: pointer;
+        z-index: 1001;
+        display: none;
+    `;
     document.body.appendChild(closeButton);
 
-    let activeCard = null;
-    let currentIndex = 0;
-    const imageCards = document.querySelectorAll('.personal-image-card');
-
-    // Create navigation buttons
-    const prevButton = document.createElement('button');
-    prevButton.className = 'nav-button prev-button';
-    prevButton.innerHTML = '❮';
-    document.body.appendChild(prevButton);
-
-    const nextButton = document.createElement('button');
-    nextButton.className = 'nav-button next-button';
-    nextButton.innerHTML = '❯';
-    document.body.appendChild(nextButton);
-
-    // Function to handle image click
-    function handleImageClick(card) {
+    function handleImageClick(e) {
+        const card = e.currentTarget;
+        const img = card.querySelector('img');
+        
         if (activeCard === card) {
             closeActiveImage();
-        } else {
-            if (activeCard) {
-                // Slide out current image
-                activeCard.style.transform = 'translate(-100%, -50%)';
-                activeCard.style.opacity = '0';
-                setTimeout(() => {
-                    activeCard.classList.remove('active');
-                    activeCard.classList.add('minimized');
-                    activeCard.style.transform = '';
-                    activeCard.style.opacity = '';
-                }, 300);
-            }
-
-            // Update current index
-            currentIndex = Array.from(imageCards).indexOf(card);
-
-            // Slide in new image
-            card.classList.remove('minimized');
-            card.classList.add('active');
-            card.style.transform = 'translate(100%, -50%)';
-            card.style.opacity = '0';
-            
-            requestAnimationFrame(() => {
-                card.style.transform = 'translate(-50%, -50%)';
-                card.style.opacity = '1';
-            });
-
-            overlay.classList.add('active');
-            closeButton.classList.add('active');
-            updateNavigationButtons();
-            activeCard = card;
+            return;
         }
-    }
 
-    // Function to navigate between images
-    function navigateImages(direction) {
-        const newIndex = currentIndex + direction;
-        if (newIndex >= 0 && newIndex < imageCards.length) {
-            const nextCard = imageCards[newIndex];
-            
-            // Slide out current image
-            activeCard.style.transform = direction > 0 ? 
-                'translate(-150%, -50%)' : 'translate(50%, -50%)';
-            activeCard.style.opacity = '0';
-
-            setTimeout(() => {
-                activeCard.classList.remove('active');
-                activeCard.classList.add('minimized');
-                activeCard.style.transform = '';
-                activeCard.style.opacity = '';
-
-                // Slide in new image
-                nextCard.classList.remove('minimized');
-                nextCard.classList.add('active');
-                nextCard.style.transform = direction > 0 ? 
-                    'translate(50%, -50%)' : 'translate(-150%, -50%)';
-                nextCard.style.opacity = '0';
-
-                requestAnimationFrame(() => {
-                    nextCard.style.transform = 'translate(-50%, -50%)';
-                    nextCard.style.opacity = '1';
-                });
-
-                activeCard = nextCard;
-                currentIndex = newIndex;
-                updateNavigationButtons();
-            }, 300);
+        if (activeCard) {
+            closeActiveImage();
         }
-    }
 
-    // Update navigation buttons visibility
-    function updateNavigationButtons() {
-        prevButton.style.display = currentIndex > 0 ? 'block' : 'none';
-        nextButton.style.display = currentIndex < imageCards.length - 1 ? 'block' : 'none';
+        activeCard = card;
+        overlay.style.display = 'flex';
+        closeButton.style.display = 'block';
         
-        if (activeCard) {
-            prevButton.classList.add('active');
-            nextButton.classList.add('active');
-        } else {
-            prevButton.classList.remove('active');
-            nextButton.classList.remove('active');
-        }
+        const enlargedImg = document.createElement('img');
+        enlargedImg.src = img.src;
+        enlargedImg.style.cssText = `
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        `;
+        
+        overlay.innerHTML = '';
+        overlay.appendChild(enlargedImg);
     }
 
-    // Function to close active image
     function closeActiveImage() {
-        if (activeCard) {
-            activeCard.style.transform = 'translate(-50%, -50%) scale(0.8)';
-            activeCard.style.opacity = '0';
-            overlay.style.opacity = '0';
-            
-            setTimeout(() => {
-                activeCard.classList.remove('active');
-                activeCard.classList.remove('minimized');
-                activeCard.style.transform = '';
-                activeCard.style.opacity = '';
-                overlay.classList.remove('active');
-                overlay.style.opacity = '';
-                closeButton.classList.remove('active');
-                prevButton.classList.remove('active');
-                nextButton.classList.remove('active');
-                activeCard = null;
-            }, 300);
-        }
+        if (!activeCard) return;
+        
+        overlay.style.display = 'none';
+        closeButton.style.display = 'none';
+        activeCard = null;
     }
 
-    // Add click event listeners
     imageCards.forEach(card => {
-        card.addEventListener('click', () => handleImageClick(card));
+        card.addEventListener('click', handleImageClick);
     });
 
     overlay.addEventListener('click', closeActiveImage);
     closeButton.addEventListener('click', closeActiveImage);
-    prevButton.addEventListener('click', () => navigateImages(-1));
-    nextButton.addEventListener('click', () => navigateImages(1));
 
-    // Handle keyboard navigation
     document.addEventListener('keydown', (e) => {
-        if (activeCard) {
-            switch(e.key) {
-                case 'Escape':
-                    closeActiveImage();
-                    break;
-                case 'ArrowLeft':
-                    navigateImages(-1);
-                    break;
-                case 'ArrowRight':
-                    navigateImages(1);
-                    break;
-            }
+        if (e.key === 'Escape') {
+            closeActiveImage();
         }
     });
 }); 
