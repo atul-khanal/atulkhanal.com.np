@@ -1,18 +1,16 @@
 {
-  "name": "portfolio",
-  "private": true,
-  "type": "module",
+  "name": "valentines-gift",
+  "version": "1.0.0",
+  "description": "A beautiful Valentine's Day gift website",
+  "main": "index.html",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "start": "serve .",
+    "dev": "serve ."
   },
   "dependencies": {
-    "@heroicons/vue": "^2.1.5",
-    "@nuxtjs/tailwindcss": "^6.12.1",
-    "nuxt": "^3.12.4",
-    "vue": "latest"
+    "aos": "^2.3.4"
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
   }
-}
+} 

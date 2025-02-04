@@ -1,0 +1,477 @@
+/* Global Styles */
+:root {
+    --primary-color: #ff6b6b;
+    --secondary-color: #f7d794;
+    --text-color: #2d3436;
+    --background-color: #fff5f5;
+    --timeline-color: #fab1a0;
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --rose-color: #ff4d6d;
+    --chocolate-color: #8b4513;
+    --teddy-color: #d4a373;
+    --promise-color: #4a90e2;
+    --hug-color: #ff85a2;
+    --kiss-color: #ff3366;
+    --valentine-color: #ff1744;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background: linear-gradient(135deg, var(--background-color), #fff);
+    min-height: 100vh;
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-color);
+}
+
+/* Navigation Bar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+/* Landing Page */
+.landing-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.landing-page h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 4rem;
+}
+
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.day-card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
+}
+
+.day-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.day-card:nth-child(1) {
+    border-color: var(--rose-color);
+}
+
+.day-card:nth-child(2) {
+    border-color: var(--primary-color);
+}
+
+.day-card:nth-child(3) {
+    border-color: var(--chocolate-color);
+}
+
+.day-card:nth-child(4) {
+    border-color: var(--teddy-color);
+}
+
+.day-card:nth-child(5) {
+    border-color: var(--promise-color);
+}
+
+.day-card:nth-child(6) {
+    border-color: var(--hug-color);
+}
+
+.day-card:nth-child(7) {
+    border-color: var(--kiss-color);
+}
+
+.day-card.special {
+    background: linear-gradient(135deg, var(--valentine-color), var(--primary-color));
+}
+
+.day-card.special h2,
+.day-card.special p {
+    color: #000000;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.day-card.special .date {
+    background-color: white;
+    color: #000000;
+    font-weight: bold;
+}
+
+.day-card.special:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(255, 23, 68, 0.3);
+}
+
+.day-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: #000000;
+    text-shadow: none;
+}
+
+.day-card p {
+    font-size: 1.1rem;
+    color: #000000;
+    margin-bottom: 1rem;
+    text-shadow: none;
+}
+
+.day-card .date {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+/* Timeline Section */
+.timeline-section {
+    padding: 4rem 2rem;
+}
+
+.timeline-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    background: var(--timeline-color);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    padding: 1rem;
+    position: relative;
+    width: 50%;
+    margin-bottom: 2rem;
+}
+
+.timeline-item:nth-child(odd) {
+    left: 0;
+    padding-right: 3rem;
+}
+
+.timeline-item:nth-child(even) {
+    left: 50%;
+    padding-left: 3rem;
+}
+
+.timeline-content {
+    padding: 1.5rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-date {
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin: 1rem 0;
+}
+
+.read-more {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.read-more:hover {
+    background-color: #ff5252;
+}
+
+/* Love Letter Section */
+.letter-section {
+    padding: 4rem 2rem;
+    background-color: white;
+}
+
+.letter-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.letter-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.reveal-text {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    margin-bottom: 1.5rem;
+}
+
+.reveal-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1001;
+}
+
+.modal-content {
+    position: relative;
+    background-color: white;
+    margin: 5% auto;
+    padding: 2rem;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 10px;
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close-modal {
+    position: absolute;
+    right: 1rem;
+    top: 0.5rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.close-modal:hover {
+    color: var(--primary-color);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: white;
+    margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .timeline::after {
+        left: 31px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 1rem;
+    }
+
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        left: 0;
+    }
+
+    .nav-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .landing-page h1 {
+        font-size: 2.5rem;
+    }
+
+    .days-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .day-card {
+        padding: 1.5rem;
+    }
+
+    .letter-content {
+        padding: 1rem;
+    }
+}
+
+/* Animation Classes */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Anniversary Card Styles */
+.anniversary-card {
+    background: linear-gradient(135deg, #D4AF37 0%, #4A0404 100%);
+    border: 2px solid #D4AF37;
+    position: relative;
+    overflow: hidden;
+}
+
+.anniversary-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(212, 175, 55, 0.2), rgba(74, 4, 4, 0.1));
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.anniversary-card:hover::before {
+    background: linear-gradient(45deg, rgba(212, 175, 55, 0.3), rgba(74, 4, 4, 0.2));
+}
+
+.anniversary-card h2 {
+    color: #000000;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+    position: relative;
+    z-index: 2;
+    font-weight: bold;
+}
+
+.anniversary-card p {
+    color: #000000;
+    position: relative;
+    z-index: 2;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+}
+
+.anniversary-card .date {
+    background: #D4AF37;
+    color: #000000;
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
+}
+
+.anniversary-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(212, 175, 55, 0.3);
+}
+
+/* Ensure all card text is visible */
+.day-card h2,
+.day-card p {
+    color: #000000;
+    text-shadow: none;
+}
+
+.highlight-card h3,
+.highlight-card p {
+    color: #000000;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+} 

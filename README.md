@@ -1,75 +1,56 @@
-# Nuxt 3 Minimal Starter
+# Valentine's Day Gift Website
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A beautiful, responsive single-page website created as a Valentine's Day gift. Features a love story timeline, interactive love letter, and beautiful animations.
+
+## Features
+
+- Vertical timeline of relationship memories
+- Interactive love letter with reveal animations
+- Responsive design for all devices
+- Beautiful animations and transitions
+- Modal windows for detailed event information
+
+## Technologies Used
+
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- AOS (Animate On Scroll) library
+- Google Fonts (Playfair Display & Roboto)
+
+## Dependencies
+
+- Node.js
+- Yarn package manager
+- AOS library
+- serve (for local development)
 
 ## Setup
 
-Make sure to install the dependencies:
+1. Install dependencies:
 
-```bash
-# npm
-npm install
+   ```bash
+   yarn install
+   ```
 
-# pnpm
-pnpm install
+2. Start the development server:
 
-# yarn
-yarn install
+   ```bash
+   yarn dev
+   ```
 
-# bun
-bun install
-```
+3. Open your browser and navigate to:
+   ```
+   http://localhost:3000
+   ```
 
-## Development Server
+## Customization
 
-Start the development server on `http://localhost:3000`:
+1. Edit the timeline events in `script.js`
+2. Modify the love letter content in `index.html`
+3. Adjust colors in the CSS variables (`:root`) in `styles.css`
+4. Replace placeholder images with your own photos
 
-```bash
-# npm
-npm run dev
+## License
 
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+MIT
