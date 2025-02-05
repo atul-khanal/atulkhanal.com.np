@@ -1,7 +1,73 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Slideshow functionality
     const imageCards = document.querySelectorAll('.personal-image-card');
-    let activeCard = null;
+    const grid = document.querySelector('.personal-images-grid');
     let currentIndex = 0;
+    let slideshowInterval;
+
+    // Create slideshow controls
+    const controls = document.createElement('div');
+    controls.className = 'slideshow-controls';
+    imageCards.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.className = `slideshow-dot${index === 0 ? ' active' : ''}`;
+        dot.addEventListener('click', () => {
+            clearInterval(slideshowInterval);
+            currentIndex = index;
+            updateSlideshow();
+            startSlideshow();
+        });
+        controls.appendChild(dot);
+    });
+    grid.appendChild(controls);
+
+    function updateSlideshow() {
+        imageCards.forEach((card, index) => {
+            card.className = 'personal-image-card';
+            if (index === currentIndex) {
+                card.classList.add('active');
+            } else if (index === getPrevIndex()) {
+                card.classList.add('prev');
+            } else if (index === getNextIndex()) {
+                card.classList.add('next');
+            }
+        });
+
+        // Update dots
+        const dots = controls.querySelectorAll('.slideshow-dot');
+        dots.forEach((dot, index) => {
+            dot.className = `slideshow-dot${index === currentIndex ? ' active' : ''}`;
+        });
+    }
+
+    function getPrevIndex() {
+        return currentIndex === 0 ? imageCards.length - 1 : currentIndex - 1;
+    }
+
+    function getNextIndex() {
+        return currentIndex === imageCards.length - 1 ? 0 : currentIndex + 1;
+    }
+
+    function nextSlide() {
+        currentIndex = getNextIndex();
+        updateSlideshow();
+    }
+
+    function startSlideshow() {
+        clearInterval(slideshowInterval);
+        slideshowInterval = setInterval(nextSlide, 3000);
+    }
+
+    // Initialize slideshow
+    updateSlideshow();
+    startSlideshow();
+
+    // Pause on hover
+    grid.addEventListener('mouseenter', () => clearInterval(slideshowInterval));
+    grid.addEventListener('mouseleave', startSlideshow);
+
+    // Enlarged view functionality
+    let activeCard = null;
 
     // Create overlay
     const overlay = document.createElement('div');
@@ -19,52 +85,6 @@ document.addEventListener('DOMContentLoaded', function() {
         z-index: 1000;
     `;
     document.body.appendChild(overlay);
-
-    // Create navigation buttons for enlarged view
-    const prevBtn = document.createElement('button');
-    const nextBtn = document.createElement('button');
-    prevBtn.className = 'gallery-nav prev-nav';
-    nextBtn.className = 'gallery-nav next-nav';
-    prevBtn.innerHTML = '❮';
-    nextBtn.innerHTML = '❯';
-    prevBtn.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 20px;
-        transform: translateY(-50%);
-        background: rgba(74, 4, 4, 0.8);
-        color: white;
-        border: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        font-size: 20px;
-        cursor: pointer;
-        z-index: 1002;
-        display: none;
-        align-items: center;
-        justify-content: center;
-    `;
-    nextBtn.style.cssText = `
-        position: fixed;
-        top: 50%;
-        right: 20px;
-        transform: translateY(-50%);
-        background: rgba(74, 4, 4, 0.8);
-        color: white;
-        border: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        font-size: 20px;
-        cursor: pointer;
-        z-index: 1002;
-        display: none;
-        align-items: center;
-        justify-content: center;
-    `;
-    document.body.appendChild(prevBtn);
-    document.body.appendChild(nextBtn);
 
     // Create close button
     const closeButton = document.createElement('button');
@@ -84,29 +104,8 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.body.appendChild(closeButton);
 
-    function showImage(index) {
-        const card = imageCards[index];
-        const img = card.querySelector('img');
-        
-        const enlargedImg = document.createElement('img');
-        enlargedImg.src = img.src;
-        enlargedImg.style.cssText = `
-            max-width: 90%;
-            max-height: 90vh;
-            object-fit: contain;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        `;
-        
-        overlay.innerHTML = '';
-        overlay.appendChild(enlargedImg);
-
-        // Show/hide navigation buttons
-        prevBtn.style.display = index === 0 ? 'none' : 'flex';
-        nextBtn.style.display = index === imageCards.length - 1 ? 'none' : 'flex';
-    }
-
     function handleImageClick(e) {
+        clearInterval(slideshowInterval);
         const card = e.currentTarget;
         currentIndex = Array.from(imageCards).indexOf(card);
         
@@ -122,63 +121,157 @@ document.addEventListener('DOMContentLoaded', function() {
         activeCard = card;
         overlay.style.display = 'flex';
         closeButton.style.display = 'block';
-        showImage(currentIndex);
+        
+        const container = document.createElement('div');
+        container.className = 'enlarged-image-container';
+        
+        // Create navigation buttons
+        const prevBtn = document.createElement('button');
+        const nextBtn = document.createElement('button');
+        prevBtn.className = 'enlarged-nav prev';
+        nextBtn.className = 'enlarged-nav next';
+        prevBtn.innerHTML = '❮';
+        nextBtn.innerHTML = '❯';
+        
+        // Create counter
+        const counter = document.createElement('div');
+        counter.className = 'enlarged-counter';
+        
+        function updateCounter() {
+            counter.textContent = `${currentIndex + 1} / ${imageCards.length}`;
+        }
+        
+        function showEnlargedImage(index, direction = 'none') {
+            const card = imageCards[index];
+            const img = card.querySelector('img');
+            
+            const enlargedImg = document.createElement('img');
+            enlargedImg.className = 'enlarged-image';
+            enlargedImg.src = img.src;
+            enlargedImg.alt = img.alt;
+            
+            // Remove any existing transition classes
+            const existingImg = container.querySelector('.enlarged-image');
+            if (existingImg) {
+                if (direction === 'next') {
+                    existingImg.classList.add('slide-out-left');
+                    enlargedImg.classList.add('slide-from-right');
+                } else if (direction === 'prev') {
+                    existingImg.classList.add('slide-out-right');
+                    enlargedImg.classList.add('slide-from-left');
+                }
+                
+                setTimeout(() => {
+                    existingImg.remove();
+                    enlargedImg.classList.remove('slide-from-left', 'slide-from-right');
+                    enlargedImg.classList.add('slide-in');
+                }, 300);
+            }
+            
+            container.appendChild(enlargedImg);
+            
+            if (!existingImg) {
+                // Force reflow and add slide-in for first image
+                enlargedImg.offsetHeight;
+                enlargedImg.classList.add('slide-in');
+            }
+            
+            updateCounter();
+            
+            // Update navigation buttons
+            prevBtn.style.opacity = index === 0 ? '0.5' : '1';
+            prevBtn.style.pointerEvents = index === 0 ? 'none' : 'auto';
+            nextBtn.style.opacity = index === imageCards.length - 1 ? '0.5' : '1';
+            nextBtn.style.pointerEvents = index === imageCards.length - 1 ? 'none' : 'auto';
+        }
+        
+        // Navigation handlers
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                showEnlargedImage(currentIndex, 'prev');
+            }
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < imageCards.length - 1) {
+                currentIndex++;
+                showEnlargedImage(currentIndex, 'next');
+            }
+        });
+        
+        // Keyboard navigation
+        function handleKeyDown(e) {
+            if (!activeCard) return;
+            
+            switch(e.key) {
+                case 'ArrowLeft':
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        showEnlargedImage(currentIndex, 'prev');
+                    }
+                    break;
+                case 'ArrowRight':
+                    if (currentIndex < imageCards.length - 1) {
+                        currentIndex++;
+                        showEnlargedImage(currentIndex, 'next');
+                    }
+                    break;
+                case 'Escape':
+                    closeActiveImage();
+                    break;
+            }
+        }
+        
+        document.addEventListener('keydown', handleKeyDown);
+        
+        // Auto-advance timer
+        let enlargedInterval;
+        function startEnlargedSlideshow() {
+            clearInterval(enlargedInterval);
+            enlargedInterval = setInterval(() => {
+                if (currentIndex < imageCards.length - 1) {
+                    currentIndex++;
+                    showEnlargedImage(currentIndex, 'next');
+                } else {
+                    currentIndex = 0;
+                    showEnlargedImage(currentIndex, 'next');
+                }
+            }, 3000);
+        }
+        
+        container.addEventListener('mouseenter', () => clearInterval(enlargedInterval));
+        container.addEventListener('mouseleave', startEnlargedSlideshow);
+        
+        overlay.innerHTML = '';
+        overlay.appendChild(container);
+        overlay.appendChild(prevBtn);
+        overlay.appendChild(nextBtn);
+        overlay.appendChild(counter);
+        
+        showEnlargedImage(currentIndex);
+        startEnlargedSlideshow();
+        
+        // Cleanup function
+        function cleanup() {
+            clearInterval(enlargedInterval);
+            document.removeEventListener('keydown', handleKeyDown);
+        }
+        
+        return cleanup;
     }
 
     function closeActiveImage() {
         if (!activeCard) return;
         
+        const cleanup = activeCard.cleanup;
+        if (cleanup) cleanup();
+        
         overlay.style.display = 'none';
         closeButton.style.display = 'none';
-        prevBtn.style.display = 'none';
-        nextBtn.style.display = 'none';
         activeCard = null;
+        startSlideshow();
     }
-
-    // Touch swipe functionality
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    overlay.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, false);
-
-    overlay.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, false);
-
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const diff = touchStartX - touchEndX;
-
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0 && currentIndex < imageCards.length - 1) {
-                // Swipe left
-                currentIndex++;
-                showImage(currentIndex);
-            } else if (diff < 0 && currentIndex > 0) {
-                // Swipe right
-                currentIndex--;
-                showImage(currentIndex);
-            }
-        }
-    }
-
-    // Navigation handlers
-    prevBtn.addEventListener('click', () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            showImage(currentIndex);
-        }
-    });
-
-    nextBtn.addEventListener('click', () => {
-        if (currentIndex < imageCards.length - 1) {
-            currentIndex++;
-            showImage(currentIndex);
-        }
-    });
 
     imageCards.forEach(card => {
         card.addEventListener('click', handleImageClick);
@@ -192,26 +285,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     closeButton.addEventListener('click', closeActiveImage);
 
-    // Keyboard navigation
     document.addEventListener('keydown', (e) => {
-        if (!activeCard) return;
-        
-        switch(e.key) {
-            case 'Escape':
-                closeActiveImage();
-                break;
-            case 'ArrowLeft':
-                if (currentIndex > 0) {
-                    currentIndex--;
-                    showImage(currentIndex);
-                }
-                break;
-            case 'ArrowRight':
-                if (currentIndex < imageCards.length - 1) {
-                    currentIndex++;
-                    showImage(currentIndex);
-                }
-                break;
+        if (e.key === 'Escape') {
+            closeActiveImage();
         }
     });
 
@@ -228,7 +304,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 reader.onload = function(e) {
                     img.src = e.target.result;
-                    // Optional: Save to localStorage to persist the uploaded image
                     localStorage.setItem(`milestone-image-${upload.dataset.index}`, e.target.result);
                 };
                 
@@ -237,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Load saved images from localStorage if any
+    // Load saved milestone images
     milestoneUploads.forEach(upload => {
         const savedImage = localStorage.getItem(`milestone-image-${upload.dataset.index}`);
         if (savedImage) {
