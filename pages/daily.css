@@ -1,4 +1,11 @@
 /* Daily Page Styles */
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
 .daily-nav {
     position: fixed;
     top: 0;
@@ -113,9 +120,12 @@
 }
 
 .daily-content {
-    max-width: 1200px;
+    max-width: 100%;
+    width: 100%;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .daily-header {
@@ -146,6 +156,8 @@
     background: linear-gradient(145deg, #fff, var(--theme-accent));
     border-radius: 15px;
     box-shadow: 0 5px 15px var(--theme-shadow);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .memory-card.reverse {
@@ -153,8 +165,10 @@
 }
 
 .memory-card img {
-    width: 50%;
-    height: 400px;
+    width: 100%;
+    height: auto;
+    min-height: 500px;
+    max-height: 700px;
     object-fit: cover;
     border-radius: 10px;
     box-shadow: 0 5px 15px var(--theme-shadow);
@@ -165,6 +179,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
 }
 
 .memory-text h2 {
@@ -251,11 +268,17 @@
     .memory-card,
     .memory-card.reverse {
         flex-direction: column;
+        padding: 1rem;
     }
 
     .memory-card img {
         width: 100%;
-        height: 300px;
+        min-height: 300px;
+        max-height: 400px;
+    }
+
+    .memory-text {
+        padding: 1rem;
     }
 
     .personal-images-grid {
@@ -663,12 +686,12 @@
 
 /* Personal Images Section - Updated Animations */
 .personal-images-section {
-    margin: 2rem 0;
-    padding: 2rem;
-    background: linear-gradient(145deg, var(--theme-accent), #fff);
-    border-radius: 15px;
-    box-shadow: 0 5px 15px var(--theme-shadow);
-    perspective: 1000px;
+    margin: 2rem auto;
+    padding: 2rem 0;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .personal-images-section h2 {
@@ -683,10 +706,12 @@
     height: 70vh;
     min-height: 400px;
     max-height: 800px;
-    margin: 0 auto;
+    width: 100%;
     max-width: 1200px;
+    margin: 0 auto;
     transform-style: preserve-3d;
-    padding: 20px;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .personal-image-card {
@@ -742,7 +767,30 @@
 
 /* Enlarged View Styles */
 .gallery-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     background: rgba(0, 0, 0, 0.95) !important;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.enlarged-image-container {
+    position: relative;
+    width: 90vw;
+    height: 90vh;
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
 .enlarged-image {
