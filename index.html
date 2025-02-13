@@ -31,6 +31,7 @@
             padding: 2rem;
             position: relative;
             overflow: hidden;
+            height: 100vh; /* Ensure full viewport height for centering */
         }
 
         .hearts {
@@ -66,14 +67,19 @@
         }
 
         .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
             z-index: 1;
             background: rgba(255, 255, 255, 0.9);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 5px 25px rgba(255, 20, 147, 0.3);
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
             max-width: 600px;
-            width: 90%;
+            width: 100vw;
+            height: 100vh;
             position: relative;
         }
 
@@ -83,6 +89,7 @@
             font-size: clamp(2rem, 4vw, 3rem);
             margin-bottom: 2rem;
             text-shadow: 2px 2px 4px rgba(255, 20, 147, 0.2);
+            z-index: 1;
         }
 
         p {
@@ -123,18 +130,9 @@
             min-height: 60px;
         }
 
-        #yes-label {
-            background: rgba(255, 20, 147, 0.8);
-            color: white;
-            padding: 1.5rem 2rem;
-            flex-wrap: wrap;
-            text-align: center;
-            min-width: 200px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-        }
-
-        #no-label {
-            color: var(--primary-color);
+        #yes-label, #no-label {
+            background: transparent;
+            transition: opacity 0.3s ease;
         }
 
         input[type="radio"] {
@@ -216,6 +214,15 @@
             .choice-label {
                 padding: 0.8rem 1.5rem;
             }
+        }
+
+        #yes-label {
+            max-width: 90vw; /* Ensure it doesn't exceed the viewport width */
+            overflow: hidden; /* Hide any overflow content */
+        }
+
+        #no-label {
+            background: white;
         }
     </style>
 </head>
@@ -395,16 +402,55 @@
             noLabel.style.transition = 'all 0.5s ease';
         }
 
-        // Remove mouseover event and interval
-        // noLabel.addEventListener('mouseover', () => {
-        //     moveNoButton();
-        // });
+        // Function to make the background of the Yes button transparent when its size increases
+        function adjustYesButtonBackground() {
+            const yesLabel = document.getElementById('yes-label');
+            const observer = new ResizeObserver(entries => {
+                for (let entry of entries) {
+                    yesLabel.style.background = 'rgba(255, 20, 147, 0.8)'; // Keep the original background
+                }
+            });
+            observer.observe(yesLabel);
+        }
 
-        // setInterval(() => {
-        //     if (noClickCount > 0) {
-        //         moveNoButton();
-        //     }
-        // }, 2000);
+        // Call the function on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', adjustYesButtonBackground);
+
+        // JavaScript to vary opacity
+        function adjustButtonOpacity() {
+            const yesLabel = document.getElementById('yes-label');
+            const noLabel = document.getElementById('no-label');
+
+            yesLabel.removeEventListener('mouseover', () => {
+                yesLabel.style.opacity = '0.5';
+            });
+            yesLabel.removeEventListener('mouseout', () => {
+                yesLabel.style.opacity = '1';
+            });
+
+            noLabel.removeEventListener('mouseover', () => {
+                noLabel.style.opacity = '0.5';
+            });
+            noLabel.removeEventListener('mouseout', () => {
+                noLabel.style.opacity = '1';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', adjustButtonOpacity);
+
+        // Adjust position if it exceeds the viewport
+        function adjustYesButtonPosition() {
+            const yesLabel = document.getElementById('yes-label');
+            const viewportWidth = window.innerWidth;
+
+            const yesRect = yesLabel.getBoundingClientRect();
+            if (yesRect.right > viewportWidth) {
+                yesLabel.style.left = `${viewportWidth - yesRect.width}px`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', adjustYesButtonPosition);
+        window.addEventListener('resize', adjustYesButtonPosition);
     </script>
 </body>
 </html> 
