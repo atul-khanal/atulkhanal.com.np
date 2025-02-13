@@ -476,6 +476,17 @@
 
         document.addEventListener('DOMContentLoaded', adjustYesButtonPosition);
         window.addEventListener('resize', adjustYesButtonPosition);
+
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.value !== 'yes') {
+                    const isMobile = window.innerWidth <= 768;
+                    const yesScaleX = isMobile ? Math.min(2, 1 + (noClickCount * 0.2)) : Math.min(3, 1 + (noClickCount * 0.3));
+                    const yesScaleY = isMobile ? Math.min(3, 1 + (noClickCount * 0.4)) : Math.min(3, 1 + (noClickCount * 0.3));
+                    yesLabel.style.transform = `scale(${yesScaleX}, ${yesScaleY})`;
+                }
+            });
+        });
     </script>
 </body>
 </html> 
