@@ -3,147 +3,408 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Anniversary - A Lifetime of Love</title>
-    <!-- Google Fonts -->
+    <title>A Special Question</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <!-- AOS CSS for animations -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="pages/daily.css">
+    <style>
+        :root {
+            --primary-color: #FF1493;
+            --secondary-color: #FF69B4;
+            --accent-color: #FFB6C1;
+            --background-color: #FFF0F5;
+            --text-color: #4A0404;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--background-color), white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: var(--primary-color);
+            opacity: 0;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .content {
+            text-align: center;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(255, 20, 147, 0.3);
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(255, 20, 147, 0.2);
+        }
+
+        p {
+            color: var(--text-color);
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .special-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--primary-color);
+            margin: 2rem 0;
+            font-weight: bold;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .choice-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            background: white;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            border: 2px solid var(--primary-color);
+            min-height: 60px;
+        }
+
+        #yes-label {
+            background: rgba(255, 20, 147, 0.8);
+            color: white;
+            padding: 1.5rem 2rem;
+            flex-wrap: wrap;
+            text-align: center;
+            min-width: 200px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        #no-label {
+            color: var(--primary-color);
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        .continue-btn {
+            display: none;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 20, 147, 0.4);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(255, 20, 147, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 20, 147, 0);
+            }
+        }
+
+        .continue-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
+        }
+
+        .celebration {
+            display: none;
+            margin-top: 2rem;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tease-message {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            opacity: 1;
+            animation: fadeIn 0.5s ease-out;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 2rem;
+            }
+
+            .choices {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .choice-label {
+                padding: 0.8rem 1.5rem;
+            }
+        }
+    </style>
 </head>
-<body class="anniversary-theme">
-    <div class="daily-content">
-        <header class="daily-header" data-aos="fade-down">
-            <h1>Happy Anniversary</h1>
-            <p>Celebrating a lifetime of love and togetherness...</p>
-        </header>
+<body>
+    <div class="hearts"></div>
+    <div class="content">
+        <h1>My Dearest...</h1>
+        <p>From the moment I first saw you, my heart knew you were special. Every smile, every laugh, every moment with you has made my life brighter.</p>
+        <p>Your kindness, your beauty, your amazing spirit... everything about you makes my heart skip a beat.</p>
+        <div class="special-text">Will you be my Valentine?</div>
+        
+        <div class="choices">
+            <label id="yes-label" class="choice-label">
+                <input type="radio" name="answer" value="yes">
+                Yes, I'd love to! ❤️
+            </label>
+            <label id="no-label" class="choice-label">
+                <input type="radio" name="answer" value="no">
+                No
+            </label>
+        </div>
 
-        <section class="personal-images-section" data-aos="fade-up">
-            <h2>Beautiful Memories Together</h2>
-            <div class="personal-images-grid">
-                <div class="personal-image-card">
-                    <img src="pages/assets/20241022_125633.jpg" alt="Special Moment">
-                    <div class="personal-image-caption">Beautiful Moments</div>
-                </div>
-                <div class="personal-image-card">
-                    <img src="pages/assets/PXL_20231102_152603701.jpg" alt="Together">
-                    <div class="personal-image-caption">Together Forever</div>
-                </div>
-                <div class="personal-image-card">
-                    <img src="pages/assets/PXL_20231024_075026480.PORTRAIT.jpg" alt="Love">
-                    <div class="personal-image-caption">Love & Joy</div>
-                </div>
-                <div class="personal-image-card">
-                    <img src="pages/assets/PXL_20230715_113109169.jpg" alt="Special Day">
-                    <div class="personal-image-caption">Special Memories</div>
-                </div>
-                <div class="personal-image-card">
-                    <img src="pages/assets/PXL_20231024_075034135.PORTRAIT.jpg" alt="Cherished Moments">
-                    <div class="personal-image-caption">Cherished Moments</div>
-                </div>
-                <div class="personal-image-card">
-                    <img src="pages/assets/20241022_125813.jpg" alt="Forever Love">
-                    <div class="personal-image-caption">Forever Love</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="memory-card" data-aos="fade-up">
-            <img src="pages/assets/PXL_20231024_075034135.PORTRAIT.jpg" alt="Love Journey" class="memory-image">
-            <div class="memory-text">
-                <h2>A Beautiful Journey</h2>
-                <p>From the day you both said 'I do' to today, your love has been an inspiration. Your journey together shows us what true love, commitment, and partnership really mean.</p>
-            </div>
-        </section>
-
-        <section class="quote-section" data-aos="fade-up">
-            <blockquote>
-                "The best love is the kind that awakens the soul and makes us reach for more, that plants a fire in our hearts and brings peace to our minds."
-            </blockquote>
-        </section>
-
-        <section class="milestone-section" data-aos="fade-up">
-            <h2>Beautiful Milestones</h2>
-            <div class="milestone-grid">
-                <div class="milestone-card">
-                    <div class="milestone-image-container">
-                        <img src="pages/assets/milestone1.jpg" alt="Wedding Day" class="milestone-image">
-                        <input type="file" class="milestone-upload" accept="image/*" data-index="1">
-                        <div class="upload-overlay">
-                            <span>Click to Upload Image</span>
-                        </div>
-                    </div>
-                    <h3>The Beginning</h3>
-                    <p>Your beautiful wedding day</p>
-                </div>
-                <div class="milestone-card">
-                    <div class="milestone-image-container">
-                        <img src="pages/assets/milestone2.jpg" alt="Family Growth" class="milestone-image">
-                        <input type="file" class="milestone-upload" accept="image/*" data-index="2">
-                        <div class="upload-overlay">
-                            <span>Click to Upload Image</span>
-                        </div>
-                    </div>
-                    <h3>Growing Family</h3>
-                    <p>Blessed with children</p>
-                </div>
-                <div class="milestone-card">
-                    <div class="milestone-image-container">
-                        <img src="pages/assets/milestone3.jpg" alt="Home Sweet Home" class="milestone-image">
-                        <input type="file" class="milestone-upload" accept="image/*" data-index="3">
-                        <div class="upload-overlay">
-                            <span>Click to Upload Image</span>
-                        </div>
-                    </div>
-                    <h3>Building Home</h3>
-                    <p>Creating memories together</p>
-                </div>
-                <div class="milestone-card">
-                    <div class="milestone-image-container">
-                        <img src="pages/assets/milestone4.jpg" alt="Years Together" class="milestone-image">
-                        <input type="file" class="milestone-upload" accept="image/*" data-index="4">
-                        <div class="upload-overlay">
-                            <span>Click to Upload Image</span>
-                        </div>
-                    </div>
-                    <h3>Forever Love</h3>
-                    <p>Years of togetherness</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="memory-card reverse" data-aos="fade-up">
-            <img src="pages/assets/20241022_125813.jpg" alt="Love Forever" class="memory-image">
-            <div class="memory-text">
-                <h2>Love Through The Years</h2>
-                <p>Your love story is a testament to the power of commitment, understanding, and unconditional love. Through ups and downs, you've stood together, making every moment special.</p>
-            </div>
-        </section>
-
-        <section class="letter-section" data-aos="fade-up">
-            <div class="letter-content">
-                <h2>Dear Mom and Dad,</h2>
-                <p>Happy Anniversary to the most amazing parents! Your love story has been our greatest teacher. The way you care for each other, support each other, and love each other has shown us what true love really means.</p>
-                <p>Through the years, we've watched you navigate life's challenges with grace and face every situation hand in hand. Your bond has only grown stronger with time, like a fine wine that gets better with age.</p>
-                <p>Thank you for being the perfect example of love, commitment, and partnership. Your relationship is the foundation of our family and an inspiration to all who know you.</p>
-                <p>May your love continue to grow stronger with each passing year. Here's to many more years of happiness, laughter, and beautiful memories together!</p>
-                <p class="signature">With all our love,<br>Your Children ❤️</p>
-            </div>
-        </section>
+        <div class="celebration">You've made me the happiest person! ❤️</div>
+        <a href="pages/valentine.html" class="continue-btn">Continue to Our Story ❤️</a>
     </div>
 
-    <footer class="daily-footer">
-        <p>A lifetime of love and counting...</p>
-    </footer>
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="pages/gallery.js"></script>
     <script>
-        AOS.init({
-            duration: 800,
-            once: true
+        // Prevent direct access to valentine page
+        if (!sessionStorage.getItem('valentineAccepted')) {
+            window.addEventListener('DOMContentLoaded', () => {
+                document.querySelector('.continue-btn').addEventListener('click', (e) => {
+                    if (!sessionStorage.getItem('valentineAccepted')) {
+                        e.preventDefault();
+                        alert('Please answer the question first! ❤️');
+                    }
+                });
+            });
+        }
+
+        // Create floating hearts
+        function createHearts() {
+            const hearts = document.querySelector('.hearts');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            hearts.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        setInterval(createHearts, 300);
+
+        // Handle radio button interactions
+        const yesLabel = document.getElementById('yes-label');
+        const noLabel = document.getElementById('no-label');
+        const continueBtn = document.querySelector('.continue-btn');
+        const celebration = document.querySelector('.celebration');
+        let noClickCount = 0;
+        const maxClicks = 10;
+
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.value === 'yes') {
+                    sessionStorage.setItem('valentineAccepted', 'true');
+                    continueBtn.style.display = 'inline-block';
+                    celebration.style.display = 'block';
+                    yesLabel.style.transform = 'scale(1.2)';
+                    noLabel.style.transform = 'scale(1)';
+                    // Create extra hearts for celebration
+                    for(let i = 0; i < 20; i++) {
+                        setTimeout(createHearts, i * 100);
+                    }
+                    // Redirect to Valentine's page after 1.5 seconds
+                    setTimeout(() => {
+                        window.location.href = 'pages/valentine.html';
+                    }, 1500);
+                } else {
+                    noClickCount++;
+                    continueBtn.style.display = 'none';
+                    celebration.style.display = 'none';
+
+                    // Uncheck the No radio button to make it clickable again
+                    setTimeout(() => {
+                        e.target.checked = false;
+                    }, 100);
+
+                    // Calculate scales based on click count
+                    const noScale = Math.max(0.3, 1 - (noClickCount * 0.07));
+                    const yesScale = 1 + (noClickCount * 0.3);
+                    
+                    // Make No button smaller but still visible and clickable
+                    noLabel.style.transform = `scale(${noScale})`;
+                    noLabel.style.fontSize = `${Math.max(10, 16 - (noClickCount * 1))}px`;
+                    noLabel.style.opacity = `${Math.max(0.5, 1 - (noClickCount * 0.05))}`;
+                    noLabel.style.cursor = 'pointer';
+                    
+                    // Make Yes button huge and update its content
+                    yesLabel.style.transform = `scale(${yesScale})`;
+                    yesLabel.style.fontSize = `${Math.min(50, 16 + (noClickCount * 3))}px`;
+                    yesLabel.style.minWidth = `${Math.max(200, 200 + (noClickCount * 20))}px`;
+                    
+                    // Ensure the Yes button stays visible
+                    const yesRect = yesLabel.getBoundingClientRect();
+                    const viewportHeight = window.innerHeight;
+                    if (yesRect.bottom > viewportHeight) {
+                        const scrollNeeded = yesRect.bottom - viewportHeight + 100; // Add padding
+                        window.scrollTo({
+                            top: window.scrollY + scrollNeeded,
+                            behavior: 'smooth'
+                        });
+                    }
+                    
+                    // Move the No button to a random position after each click
+                    noLabel.style.position = 'fixed';
+                    moveNoButton();
+
+                    // At 10 clicks, make Yes button take most of the screen
+                    if (noClickCount >= maxClicks) {
+                        yesLabel.style.transform = 'scale(4)';
+                        yesLabel.style.transition = 'all 0.5s ease';
+                        noLabel.style.transform = 'scale(0.3)';
+                        noLabel.style.opacity = '0.5';
+                        noLabel.style.cursor = 'pointer';
+                        
+                        // Add extra hearts
+                        for(let i = 0; i < 30; i++) {
+                            setTimeout(createHearts, i * 100);
+                        }
+                    }
+
+                    // Add teasing messages after certain clicks
+                    const messages = [
+                        "Are you sure? 🥺",
+                        "Really sure? 💕",
+                        "Think again! 💝",
+                        "Last chance! 💖",
+                        "Don't be shy! 💓",
+                        "Change of heart? 💗",
+                        "Pretty please! 💝",
+                        "I'll be waiting! 💕",
+                        "Look how pretty the Yes button is! 💖",
+                        "You know you want to! 💗"
+                    ];
+                    
+                    if (messages[noClickCount - 1]) {
+                        const message = document.createElement('div');
+                        message.textContent = messages[noClickCount - 1];
+                        message.className = 'tease-message';
+                        
+                        // Remove previous message if exists
+                        const prevMessage = yesLabel.querySelector('.tease-message');
+                        if (prevMessage) prevMessage.remove();
+                        
+                        yesLabel.appendChild(message);
+                    }
+                }
+            });
         });
+
+        // Function to move the No button randomly
+        function moveNoButton() {
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const buttonWidth = noLabel.offsetWidth;
+            const buttonHeight = noLabel.offsetHeight;
+
+            // Calculate random position within viewport bounds
+            const maxX = viewportWidth - buttonWidth;
+            const maxY = viewportHeight - buttonHeight;
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+
+            noLabel.style.position = 'fixed';
+            noLabel.style.left = `${randomX}px`;
+            noLabel.style.top = `${randomY}px`;
+            noLabel.style.transition = 'all 0.5s ease';
+        }
+
+        // Remove mouseover event and interval
+        // noLabel.addEventListener('mouseover', () => {
+        //     moveNoButton();
+        // });
+
+        // setInterval(() => {
+        //     if (noClickCount > 0) {
+        //         moveNoButton();
+        //     }
+        // }, 2000);
     </script>
 </body>
 </html> 
