@@ -312,7 +312,7 @@
 
                     // Calculate scales based on click count
                     const noScale = Math.max(0.3, 1 - (noClickCount * 0.07));
-                    const yesScale = 1 + (noClickCount * 0.3);
+                    const yesScale = Math.min(3, 1 + (noClickCount * 0.3));
                     
                     // Make No button smaller but still visible and clickable
                     noLabel.style.transform = `scale(${noScale})`;
@@ -342,12 +342,16 @@
 
                     // At 10 clicks, make Yes button take most of the screen
                     if (noClickCount >= maxClicks) {
-                        yesLabel.style.transform = 'scale(4)';
+                        yesLabel.style.transform = 'scale(1)';
+                        yesLabel.style.width = '100vw';
+                        yesLabel.style.height = '100vh';
+                        yesLabel.style.position = 'fixed';
+                        yesLabel.style.top = '0';
+                        yesLabel.style.left = '0';
                         yesLabel.style.transition = 'all 0.5s ease';
                         noLabel.style.transform = 'scale(0.3)';
                         noLabel.style.opacity = '0.5';
                         noLabel.style.cursor = 'pointer';
-                        
                         // Add extra hearts
                         for(let i = 0; i < 30; i++) {
                             setTimeout(createHearts, i * 100);
@@ -442,10 +446,14 @@
         function adjustYesButtonPosition() {
             const yesLabel = document.getElementById('yes-label');
             const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
 
             const yesRect = yesLabel.getBoundingClientRect();
             if (yesRect.right > viewportWidth) {
                 yesLabel.style.left = `${viewportWidth - yesRect.width}px`;
+            }
+            if (yesRect.bottom > viewportHeight) {
+                yesLabel.style.top = `${viewportHeight - yesRect.height}px`;
             }
         }
 
