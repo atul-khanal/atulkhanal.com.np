@@ -228,6 +228,10 @@
             z-index: 1000;
         }
 
+        .choice-label[value="yes"] {
+            z-index: 1000; /* Higher z-index for Yes button */
+        }
+
         /* Add these styles before the end of the style section */
         @keyframes fadeIn {
             from {
@@ -371,19 +375,40 @@
             const buttonX = buttonRect.left + buttonRect.width / 2;
             const buttonY = buttonRect.top + buttonRect.height / 2;
             
+            // Get Yes button position
+            const yesButton = document.querySelector('input[value="yes"]').parentElement;
+            const yesRect = yesButton.getBoundingClientRect();
+            const yesX = yesRect.left + yesRect.width / 2;
+            const yesY = yesRect.top + yesRect.height / 2;
+            
             // Calculate distance between cursor and button
             const distance = Math.sqrt(
                 Math.pow(mouseX - buttonX, 2) + 
                 Math.pow(mouseY - buttonY, 2)
             );
             
-            // Only move if cursor is within 300px
-            if (distance < 300) {
-                // Calculate direction from cursor to button
-                const angle = Math.atan2(mouseY - buttonY, mouseX - buttonX);
+            // Calculate distance to Yes button
+            const distanceToYes = Math.sqrt(
+                Math.pow(buttonX - yesX, 2) + 
+                Math.pow(buttonY - yesY, 2)
+            );
+            
+            // Only move if cursor is within 300px or too close to Yes button
+            const minDistanceFromYes = 300; // Minimum distance to maintain from Yes button
+            if (distance < 300 || distanceToYes < minDistanceFromYes) {
+                let angle;
+                let speed;
                 
-                // Speed based on proximity
-                const speed = (1 - distance / 300) * 800;
+                // If too close to Yes button, move away from it
+                if (distanceToYes < minDistanceFromYes) {
+                    angle = Math.atan2(buttonY - yesY, buttonX - yesX);
+                    speed = 1000;
+                } else {
+                    // Otherwise, move away from cursor
+                    angle = Math.atan2(mouseY - buttonY, mouseX - buttonX);
+                    speed = (1 - distance / 300) * 800;
+                }
+                
                 let newX = buttonX - Math.cos(angle) * speed;
                 let newY = buttonY - Math.sin(angle) * speed;
                 
@@ -392,10 +417,26 @@
                 newX = Math.max(margin, Math.min(window.innerWidth - buttonRect.width - margin, newX));
                 newY = Math.max(margin, Math.min(window.innerHeight - buttonRect.height - margin, newY));
                 
+                // If still too close to Yes button after boundary adjustment, try a different direction
+                const newDistanceToYes = Math.sqrt(
+                    Math.pow(newX - yesX, 2) + 
+                    Math.pow(newY - yesY, 2)
+                );
+                
+                if (newDistanceToYes < minDistanceFromYes) {
+                    // Try moving in a perpendicular direction
+                    const perpAngle = angle + Math.PI / 2;
+                    newX = buttonX + Math.cos(perpAngle) * minDistanceFromYes;
+                    newY = buttonY + Math.sin(perpAngle) * minDistanceFromYes;
+                    
+                    // Keep within bounds again
+                    newX = Math.max(margin, Math.min(window.innerWidth - buttonRect.width - margin, newX));
+                    newY = Math.max(margin, Math.min(window.innerHeight - buttonRect.height - margin, newY));
+                }
+                
                 button.style.left = `${newX}px`;
                 button.style.top = `${newY}px`;
             }
-            // No else clause - button stays in place when cursor is far
         }
 
         document.querySelectorAll('input[type="radio"]').forEach(radio => {
@@ -439,11 +480,34 @@
                         const currentX = noButton.offsetLeft || maxX/2;
                         const currentY = noButton.offsetTop || maxY/2;
                         
-                        // Move in a circular pattern
+                        // Get Yes button position
+                        const yesButton = document.querySelector('input[value="yes"]').parentElement;
+                        const yesRect = yesButton.getBoundingClientRect();
+                        const yesX = yesRect.left + yesRect.width / 2;
+                        const yesY = yesRect.top + yesRect.height / 2;
+                        
+                        // Move in a circular pattern but maintain distance from Yes button
                         const angle = (noClickCount * Math.PI / 4) % (2 * Math.PI); // 45 degree increments
-                        const radius = 100; // pixels to move in each direction
-                        const newX = Math.max(20, Math.min(maxX - 20, currentX + Math.cos(angle) * radius));
-                        const newY = Math.max(20, Math.min(maxY - 20, currentY + Math.sin(angle) * radius));
+                        const radius = 200; // Increased radius to ensure minimum distance
+                        let newX = currentX + Math.cos(angle) * radius;
+                        let newY = currentY + Math.sin(angle) * radius;
+                        
+                        // Calculate distance to Yes button for new position
+                        const distanceToYes = Math.sqrt(
+                            Math.pow(newX - yesX, 2) + 
+                            Math.pow(newY - yesY, 2)
+                        );
+                        
+                        // If too close to Yes button, adjust position
+                        if (distanceToYes < 200) {
+                            const angleFromYes = Math.atan2(newY - yesY, newX - yesX);
+                            newX = yesX + Math.cos(angleFromYes) * 200;
+                            newY = yesY + Math.sin(angleFromYes) * 200;
+                        }
+                        
+                        // Keep button within viewport bounds
+                        newX = Math.max(20, Math.min(maxX - 20, newX));
+                        newY = Math.max(20, Math.min(maxY - 20, newY));
                         
                         noButton.style.transition = 'all 0.5s ease';
                         noButton.style.left = `${newX}px`;
@@ -468,7 +532,7 @@
                     
                     yesButton.style.transform = `scale(${newScale})`;
                     yesButton.style.transition = 'all 0.5s ease';
-                    yesButton.style.zIndex = '10'; // Ensure button stays above other elements
+                    yesButton.style.zIndex = '1000'; // Increased z-index to be higher than No button
                     
                     // Add encouraging message
                     const messages = [
