@@ -81,6 +81,15 @@
         .heartbeat {
             animation: heartbeat 1.5s infinite;
         }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -119,6 +128,254 @@
                 </button>
             </div>
         </section>
+
+        <!-- Milestone Section -->
+        <section class="py-20 px-4 bg-white/80">
+            <h2 class="romantic-title text-5xl text-center text-pink-600 mb-12">Our Special Moments</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <!-- First Date -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
+                    <div class="relative aspect-[4/3]">
+                        <img src="assets/8.jpg" alt="First Date" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-semibold">First Date</h3>
+                            <p class="text-sm opacity-90">Where our story began</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Special Moments - Grid of Images -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
+                    <div class="relative">
+                        <div class="grid grid-cols-2 gap-1">
+                            <img src="assets/1.jpg" alt="Special Moment 1" class="w-full aspect-square object-cover">
+                            <img src="assets/2.jpg" alt="Special Moment 2" class="w-full aspect-square object-cover">
+                            <img src="assets/3.jpg" alt="Special Moment 3" class="w-full aspect-square object-cover">
+                            <img src="assets/4.jpg" alt="Special Moment 4" class="w-full aspect-square object-cover">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-semibold">Special Moments</h3>
+                            <p class="text-sm opacity-90">Creating memories together</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Adventures - Grid of Images -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
+                    <div class="relative">
+                        <div class="grid grid-cols-2 gap-1">
+                            <img src="assets/5.jpg" alt="Adventure 1" class="w-full aspect-square object-cover">
+                            <img src="assets/6.jpg" alt="Adventure 2" class="w-full aspect-square object-cover">
+                            <img src="assets/7.jpg" alt="Adventure 3" class="w-full aspect-square object-cover">
+                            <img src="assets/8.jpg" alt="Adventure 4" class="w-full aspect-square object-cover">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-semibold">Adventures</h3>
+                            <p class="text-sm opacity-90">Exploring life together</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Forever Love -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
+                    <div class="relative aspect-[4/3]">
+                        <img src="assets/4.jpg" alt="Forever Love" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-semibold">Forever Love</h3>
+                            <p class="text-sm opacity-90">Our endless journey</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Favorite Images Section -->
+        <section class="py-20 px-4 bg-gradient-to-b from-white/80 to-pink-50/80">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="romantic-title text-5xl text-center text-pink-600 mb-12">Images I Love The Most</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Image 1 -->
+                    <div class="group relative overflow-hidden rounded-2xl shadow-xl transform hover:scale-105 transition-all duration-500">
+                        <img src="assets/yourbest.jpg" alt="Favorite Moment 1" class="w-full aspect-[3/4] object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-pink-600/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="romantic-title text-2xl mb-2">Our Special Day</h3>
+                            <p class="text-sm opacity-90">This moment captured my heart forever ❤️</p>
+                        </div>
+                    </div>
+                    <!-- Image 2 -->
+                    <div class="group relative overflow-hidden rounded-2xl shadow-xl transform hover:scale-105 transition-all duration-500">
+                        <img src="assets/hello.jpg" alt="Favorite Moment 2" class="w-full aspect-[3/4] object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-pink-600/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="romantic-title text-2xl mb-2">Pure Joy</h3>
+                            <p class="text-sm opacity-90">Your smile lights up my world 💖</p>
+                        </div>
+                    </div>
+                    <!-- Image 3 -->
+                    <div class="group relative overflow-hidden rounded-2xl shadow-xl transform hover:scale-105 transition-all duration-500">
+                        <img src="assets/hhhh.jpg" alt="Favorite Moment 3" class="w-full aspect-[3/4] object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-pink-600/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="romantic-title text-2xl mb-2">Perfect Moment</h3>
+                            <p class="text-sm opacity-90">Every second with you is magical ✨</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Love Note -->
+                <div class="mt-12 text-center">
+                    <p class="playfair text-xl text-gray-700 italic max-w-2xl mx-auto">
+                        "These images hold the most precious memories of our journey together. Each one tells a story of love, joy, and the beautiful moments we've shared."
+                    </p>
+                    <div class="mt-6">
+                        <i class="fas fa-heart text-pink-500 text-3xl heartbeat"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Password Modal for Kisses -->
+        <div id="kissesPasswordModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm transition-opacity duration-300 hidden">
+            <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 transform transition-all duration-300 scale-95 opacity-0" id="kissesModalContent">
+                <h3 class="romantic-title text-3xl text-pink-600 text-center mb-6">Unlock Our Kisses</h3>
+                <p class="text-gray-700 text-center mb-6">Enter the magic words to reveal our sweet kisses...</p>
+                <div class="space-y-4">
+                    <div class="relative">
+                        <input type="password" id="kissesPasswordInput" 
+                               class="w-full px-4 py-3 rounded-lg border-2 border-pink-200 focus:border-pink-500 focus:outline-none"
+                               placeholder="Enter the magic words...">
+                        <div class="absolute right-3 top-1/2 -translate-y-1/2">
+                            <i class="fas fa-kiss-wink-heart text-pink-400"></i>
+                        </div>
+                    </div>
+                    <button onclick="checkKissesPassword()" 
+                            class="w-full bg-pink-500 hover:bg-pink-600 text-white py-3 rounded-lg transition-all duration-300 transform hover:scale-105">
+                        Unlock Our Kisses 💋
+                    </button>
+                    <p id="kissesPasswordError" class="text-red-500 text-center hidden">
+                        That's not quite right... Try again! 💕
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Password Modal for Hugs -->
+        <div id="hugsPasswordModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm transition-opacity duration-300 hidden">
+            <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 transform transition-all duration-300 scale-95 opacity-0" id="hugsModalContent">
+                <h3 class="romantic-title text-3xl text-pink-600 text-center mb-6">Unlock Our Hugs</h3>
+                <p class="text-gray-700 text-center mb-6">Enter the magic words to feel our warm embraces...</p>
+                <div class="space-y-4">
+                    <div class="relative">
+                        <input type="password" id="hugsPasswordInput" 
+                               class="w-full px-4 py-3 rounded-lg border-2 border-pink-200 focus:border-pink-500 focus:outline-none"
+                               placeholder="Enter the magic words...">
+                        <div class="absolute right-3 top-1/2 -translate-y-1/2">
+                            <i class="fas fa-hands-holding-heart text-pink-400"></i>
+                        </div>
+                    </div>
+                    <button onclick="checkHugsPassword()" 
+                            class="w-full bg-pink-500 hover:bg-pink-600 text-white py-3 rounded-lg transition-all duration-300 transform hover:scale-105">
+                        Unlock Our Hugs 🤗
+                    </button>
+                    <p id="hugsPasswordError" class="text-red-500 text-center hidden">
+                        That's not quite right... Try again! 💕
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Protected Content Container -->
+        <div id="protectedContent">
+            <!-- Our Kisses Section with Unlock Button -->
+            <section class="py-20 px-4" id="kissesSection">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="romantic-title text-5xl text-center text-pink-600 mb-12">Our Kisses</h2>
+                    <div class="text-center" id="kissesLocked">
+                        <button onclick="showKissesModal()" 
+                                class="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-full text-lg transition-all duration-300 transform hover:scale-105">
+                            Unlock Our Kisses 💋
+                        </button>
+                    </div>
+                    <div id="kissesContent" class="hidden">
+                        <div class="bg-white/90 rounded-2xl shadow-xl p-8 transform hover:scale-[1.02] transition-all duration-300">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                                <div class="space-y-6">
+                                    <p class="playfair text-xl text-gray-700 leading-relaxed italic">
+                                        "Every kiss with you feels like our first kiss - magical, tender, and full of love. Each moment our lips meet, time stands still, and my heart beats only for you."
+                                    </p>
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-heart text-pink-500 text-xl heartbeat"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-semibold text-gray-800">First Kiss</h3>
+                                            <p class="text-gray-600">A moment forever etched in our hearts</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="relative group">
+                                        <img src="assets/1.jpg" alt="Romantic Moment" class="w-full aspect-square object-cover rounded-lg shadow-md">
+                                        <div class="absolute inset-0 bg-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+                                    </div>
+                                    <div class="relative group">
+                                        <img src="assets/2.jpg" alt="Sweet Kiss" class="w-full aspect-square object-cover rounded-lg shadow-md">
+                                        <div class="absolute inset-0 bg-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Our Hugs Section with Unlock Button -->
+            <section class="py-20 px-4 bg-gradient-to-b from-white/0 to-white/80" id="hugsSection">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="romantic-title text-5xl text-center text-pink-600 mb-12">Our Hugs</h2>
+                    <div class="text-center" id="hugsLocked">
+                        <button onclick="showHugsModal()" 
+                                class="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-full text-lg transition-all duration-300 transform hover:scale-105">
+                            Unlock Our Hugs 🤗
+                        </button>
+                    </div>
+                    <div id="hugsContent" class="hidden">
+                        <div class="bg-white/90 rounded-2xl shadow-xl p-8 transform hover:scale-[1.02] transition-all duration-300">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                                <div class="grid grid-cols-2 gap-4 order-2 md:order-1">
+                                    <div class="relative group">
+                                        <img src="assets/3.jpg" alt="Warm Embrace" class="w-full aspect-square object-cover rounded-lg shadow-md">
+                                        <div class="absolute inset-0 bg-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+                                    </div>
+                                    <div class="relative group">
+                                        <img src="assets/4.jpg" alt="Loving Hug" class="w-full aspect-square object-cover rounded-lg shadow-md">
+                                        <div class="absolute inset-0 bg-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+                                    </div>
+                                </div>
+                                <div class="space-y-6 order-1 md:order-2">
+                                    <p class="playfair text-xl text-gray-700 leading-relaxed italic">
+                                        "In your embrace, I find my safe haven. Your hugs are where I belong, where all my worries melt away, and where I feel most loved. Each hug tells a story of our endless love."
+                                    </p>
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-infinity text-pink-500 text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-semibold text-gray-800">Endless Embraces</h3>
+                                            <p class="text-gray-600">Every hug makes our bond stronger</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
 
         <!-- Love Quotes Section -->
         <section class="py-20 bg-white/80">
@@ -274,6 +531,117 @@
         function startJourney() {
             document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
         }
+
+        function checkKissesPassword() {
+            const password = document.getElementById('kissesPasswordInput').value;
+            const modal = document.getElementById('kissesPasswordModal');
+            const modalContent = document.getElementById('kissesModalContent');
+            const passwordError = document.getElementById('kissesPasswordError');
+
+            if (password.toLowerCase() === 'kissyouatul') {
+                // Success animation
+                modalContent.classList.remove('scale-100', 'opacity-100');
+                modalContent.classList.add('scale-105', 'opacity-0');
+                
+                // Hide modal and show content
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.getElementById('kissesLocked').classList.add('hidden');
+                    document.getElementById('kissesContent').classList.remove('hidden');
+                    // Create extra hearts animation
+                    for (let i = 0; i < 20; i++) {
+                        setTimeout(createFloatingHearts, i * 100);
+                    }
+                }, 500);
+            } else {
+                // Show error with animation
+                passwordError.classList.remove('hidden');
+                modalContent.classList.add('shake');
+                setTimeout(() => modalContent.classList.remove('shake'), 500);
+            }
+        }
+
+        function showKissesModal() {
+            const modal = document.getElementById('kissesPasswordModal');
+            const modalContent = document.getElementById('kissesModalContent');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 100);
+        }
+
+        function showHugsModal() {
+            const modal = document.getElementById('hugsPasswordModal');
+            const modalContent = document.getElementById('hugsModalContent');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 100);
+        }
+
+        function checkHugsPassword() {
+            const password = document.getElementById('hugsPasswordInput').value;
+            const modal = document.getElementById('hugsPasswordModal');
+            const modalContent = document.getElementById('hugsModalContent');
+            const error = document.getElementById('hugsPasswordError');
+
+            if (password.toLowerCase() === 'hugyouatul') {
+                modalContent.classList.remove('scale-100', 'opacity-100');
+                modalContent.classList.add('scale-105', 'opacity-0');
+                
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.getElementById('hugsLocked').classList.add('hidden');
+                    document.getElementById('hugsContent').classList.remove('hidden');
+                    for (let i = 0; i < 10; i++) {
+                        setTimeout(createFloatingHearts, i * 100);
+                    }
+                }, 500);
+            } else {
+                error.classList.remove('hidden');
+                modalContent.classList.add('shake');
+                setTimeout(() => modalContent.classList.remove('shake'), 500);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('kissesPasswordModal');
+            const modalContent = document.getElementById('kissesModalContent');
+            const passwordInput = document.getElementById('kissesPasswordInput');
+            const passwordError = document.getElementById('kissesPasswordError');
+
+            // Show modal with animation
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 100);
+
+            // Handle Enter key
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkKissesPassword();
+                }
+            });
+
+            // Clear error on input
+            passwordInput.addEventListener('input', function() {
+                passwordError.classList.add('hidden');
+            });
+
+            // Handle Enter key for hugs password
+            document.getElementById('hugsPasswordInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkHugsPassword();
+                }
+            });
+
+            // Clear error on hugs password input
+            document.getElementById('hugsPasswordInput').addEventListener('input', function() {
+                document.getElementById('hugsPasswordError').classList.add('hidden');
+            });
+        });
     </script>
 </body>
 </html> 
