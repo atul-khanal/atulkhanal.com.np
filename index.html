@@ -338,7 +338,7 @@
         </div>
 
         <div class="celebration">You've made me the happiest person! ❤️</div>
-        <a href="pages/valentine.html" class="continue-btn">Continue to Our Story ❤️</a>
+        <a href="pages/romantic.html" class="continue-btn">Continue to Our Story ❤️</a>
     </div>
 
     <script>
@@ -446,7 +446,7 @@
                     document.querySelector('.continue-btn').style.display = 'inline-block';
                     document.querySelector('.celebration').style.display = 'block';
                     setTimeout(() => {
-                        window.location.href = 'pages/valentine.html';
+                        window.location.href = 'pages/romantic.html';
                     }, 1500);
                 } else if (e.target.value === 'no') {
                     noClickCount++;
@@ -622,6 +622,32 @@
 
         // Create floating images every 3 seconds (less frequent than hearts)
         setInterval(createFloatingImage, 3000);
+
+        function handleYesClick() {
+            // Show celebration effect
+            document.querySelector('.celebration').style.display = 'block';
+            // Create hearts animation
+            createHearts();
+            // Redirect to romantic.html after a short delay
+            setTimeout(() => {
+                window.location.href = 'pages/romantic.html';
+            }, 2000); // 2 second delay for celebration effect
+        }
+
+        function createHearts() {
+            const heartsContainer = document.querySelector('.hearts');
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerHTML = '❤';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDelay = Math.random() * 3 + 's';
+                    heartsContainer.appendChild(heart);
+                    setTimeout(() => heart.remove(), 6000);
+                }, i * 100);
+            }
+        }
     </script>
 </body>
 </html> 
