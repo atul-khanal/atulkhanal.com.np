@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Romantic Journey</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary-pink: #FFB6C1;
+            --deep-pink: #FF1493;
+            --light-pink: #FFF0F5;
+            --romantic-red: #FF4D4D;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--light-pink), white);
+        }
+
+        .romantic-title {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .playfair {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Floating Hearts Animation */
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .floating-heart {
+            position: fixed;
+            animation: float 15s linear infinite;
+            color: var(--primary-pink);
+            z-index: 0;
+        }
+
+        /* Slideshow Transitions */
+        .slide-fade {
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* Music Player Styles */
+        .music-player {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-pink);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-pink);
+            border-radius: 4px;
+        }
+
+        /* Heartbeat Animation */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .heartbeat {
+            animation: heartbeat 1.5s infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Floating Hearts Background -->
+    <div id="floating-hearts" class="fixed inset-0 pointer-events-none"></div>
+
+    <!-- Main Content -->
+    <div class="relative z-10">
+        <!-- Hero Section -->
+        <section class="min-h-screen flex items-center justify-center px-4 py-20">
+            <div class="text-center">
+                <h1 class="romantic-title text-6xl md:text-8xl text-pink-600 mb-6">Our Love Story</h1>
+                <p class="playfair text-xl md:text-2xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
+                    Every moment with you feels like a beautiful dream come true. Let's celebrate our love story together.
+                </p>
+                <div class="mt-8">
+                    <button onclick="startJourney()" class="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-full text-lg transition-all duration-300 transform hover:scale-105">
+                        Begin Our Journey ❤️
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery Section -->
+        <section id="gallery" class="py-20 px-4">
+            <h2 class="romantic-title text-5xl text-center text-pink-600 mb-12">Our Beautiful Moments</h2>
+            <div class="relative max-w-6xl mx-auto">
+                <div id="slideshow" class="aspect-[16/9] rounded-lg overflow-hidden shadow-2xl">
+                    <!-- Slides will be inserted here by JavaScript -->
+                </div>
+                <button onclick="prevSlide()" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-pink-600 p-3 rounded-full shadow-lg transition-all">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button onclick="nextSlide()" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-pink-600 p-3 rounded-full shadow-lg transition-all">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Love Quotes Section -->
+        <section class="py-20 bg-white/80">
+            <div class="max-w-4xl mx-auto px-4">
+                <h2 class="romantic-title text-5xl text-center text-pink-600 mb-12">Words of Love</h2>
+                <div id="quotes-carousel" class="relative">
+                    <!-- Quotes will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Music Player -->
+        <div class="fixed bottom-0 left-0 right-0 music-player p-4 shadow-lg z-50">
+            <div class="max-w-md mx-auto flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button onclick="togglePlay()" class="text-pink-600 text-xl">
+                        <i id="playPauseIcon" class="fas fa-play"></i>
+                    </button>
+                    <div>
+                        <p id="songTitle" class="font-medium text-gray-800">Loading song...</p>
+                        <div class="w-48 h-1 bg-gray-200 rounded-full mt-1">
+                            <div id="progressBar" class="h-full bg-pink-500 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="adjustVolume(-0.1)" class="text-pink-600">
+                        <i class="fas fa-volume-down"></i>
+                    </button>
+                    <button onclick="adjustVolume(0.1)" class="text-pink-600">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Floating Hearts
+        function createFloatingHearts() {
+            const container = document.getElementById('floating-hearts');
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart text-2xl';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 5 + 10) + 's';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 15000);
+        }
+
+        setInterval(createFloatingHearts, 500);
+
+        // Slideshow
+        const images = [
+            'assets/1.jpg',
+            'assets/2.jpg',
+            'assets/3.jpg',
+            'assets/4.jpg',
+            'assets/5.jpg',
+            'assets/6.jpg',
+            'assets/7.jpg',
+            'assets/8.jpg'
+        ];
+
+        let currentSlide = 0;
+        const slideshow = document.getElementById('slideshow');
+
+        function updateSlideshow() {
+            slideshow.innerHTML = `
+                <img src="${images[currentSlide]}" 
+                     class="w-full h-full object-cover slide-fade"
+                     alt="Our Moment ${currentSlide + 1}">
+            `;
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % images.length;
+            updateSlideshow();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + images.length) % images.length;
+            updateSlideshow();
+        }
+
+        // Initialize slideshow
+        updateSlideshow();
+        setInterval(nextSlide, 5000);
+
+        // Love Quotes
+        const quotes = [
+            "In all the world, there is no heart for me like yours.",
+            "Every love story is beautiful, but ours is my favorite.",
+            "I love you not only for what you are, but for what I am when I am with you.",
+            "You are my today and all of my tomorrows."
+        ];
+
+        let currentQuote = 0;
+        const quotesCarousel = document.getElementById('quotes-carousel');
+
+        function updateQuote() {
+            quotesCarousel.innerHTML = `
+                <p class="text-2xl text-gray-700 text-center italic playfair slide-fade">
+                    "${quotes[currentQuote]}"
+                </p>
+            `;
+        }
+
+        function nextQuote() {
+            currentQuote = (currentQuote + 1) % quotes.length;
+            updateQuote();
+        }
+
+        // Initialize quotes
+        updateQuote();
+        setInterval(nextQuote, 8000);
+
+        // Music Player
+        let audio = new Audio();
+        let isPlaying = false;
+        const playlist = [
+            { title: "Perfect - Ed Sheeran", url: "path/to/song1.mp3" },
+            { title: "All of Me - John Legend", url: "path/to/song2.mp3" },
+            { title: "Can't Help Falling in Love", url: "path/to/song3.mp3" }
+        ];
+        let currentSong = 0;
+
+        function togglePlay() {
+            const playPauseIcon = document.getElementById('playPauseIcon');
+            if (isPlaying) {
+                audio.pause();
+                playPauseIcon.className = 'fas fa-play';
+            } else {
+                audio.src = playlist[currentSong].url;
+                audio.play();
+                playPauseIcon.className = 'fas fa-pause';
+                document.getElementById('songTitle').textContent = playlist[currentSong].title;
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function adjustVolume(change) {
+            audio.volume = Math.max(0, Math.min(1, audio.volume + change));
+        }
+
+        // Update progress bar
+        audio.addEventListener('timeupdate', () => {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        });
+
+        // Smooth scroll for navigation
+        function startJourney() {
+            document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html> 
