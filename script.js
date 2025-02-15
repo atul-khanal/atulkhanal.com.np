@@ -1,125 +1,193 @@
-// Initialize AOS (Animate On Scroll)
-AOS.init({
-    duration: 800,
-    once: true
-});
+// DOM Elements
+const loadingScreen = document.getElementById('loading-screen');
+const menuBtn = document.getElementById('menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const heroText = document.getElementById('hero-text');
+const skillBars = document.querySelectorAll('.skill-progress');
+const projectFilters = document.querySelectorAll('.project-filter');
+const projectCards = document.querySelectorAll('.project-card');
+const contactForm = document.getElementById('contact-form');
+const yearSpan = document.getElementById('year');
 
-// Timeline Events Data
-const timelineEvents = [
-    {
-        date: 'February 14, 2023',
-        title: 'Our First Date',
-        description: 'That magical evening at the café where we first met.',
-        image: 'https://source.unsplash.com/random/800x600/?cafe',
-        details: 'I remember being so nervous, yet the moment I saw your smile, all my anxiety melted away. We talked for hours about everything and nothing, losing track of time. The way your eyes lit up when you spoke about your passions made my heart skip a beat.'
-    },
-    {
-        date: 'April 1, 2023',
-        title: 'First Trip Together',
-        description: 'Our weekend getaway to the beach.',
-        image: 'https://source.unsplash.com/random/800x600/?beach',
-        details: 'Those three days felt like a beautiful dream. Walking hand in hand along the shore, watching the sunset, and building sandcastles like kids. I knew then that I wanted to create countless more memories with you.'
-    },
-    {
-        date: 'June 15, 2023',
-        title: 'Moving In Together',
-        description: 'Starting our life under one roof.',
-        image: 'https://source.unsplash.com/random/800x600/?home',
-        details: 'Turning our house into a home, one memory at a time. From assembling furniture (and getting it hilariously wrong) to cooking our first meal together in our kitchen. Every day with you feels like an adventure.'
-    },
-    {
-        date: 'December 25, 2023',
-        title: 'Our First Christmas',
-        description: 'The most magical holiday season.',
-        image: 'https://source.unsplash.com/random/800x600/?christmas',
-        details: 'Decorating our first Christmas tree together, baking cookies (even the burnt ones were perfect), and exchanging gifts under the twinkling lights. Your joy when you opened your present made my heart melt.'
-    }
-];
-
-// Populate Timeline
-const timeline = document.querySelector('.timeline');
-
-timelineEvents.forEach((event, index) => {
-    const timelineItem = document.createElement('div');
-    timelineItem.className = 'timeline-item';
-    timelineItem.setAttribute('data-aos', index % 2 === 0 ? 'fade-right' : 'fade-left');
-    
-    timelineItem.innerHTML = `
-        <div class="timeline-content">
-            <div class="timeline-date">${event.date}</div>
-            <h3>${event.title}</h3>
-            <img src="${event.image}" alt="${event.title}" class="timeline-img">
-            <p>${event.description}</p>
-            <button class="read-more" data-index="${index}">Read More</button>
-        </div>
-    `;
-    
-    timeline.appendChild(timelineItem);
-});
-
-// Modal Functionality
-const modal = document.getElementById('eventModal');
-const modalContent = modal.querySelector('.modal-body');
-const closeModal = document.querySelector('.close-modal');
-
-// Open Modal
-document.querySelectorAll('.read-more').forEach(button => {
-    button.addEventListener('click', () => {
-        const event = timelineEvents[button.dataset.index];
-        modalContent.innerHTML = `
-            <h3>${event.title}</h3>
-            <p class="timeline-date">${event.date}</p>
-            <img src="${event.image}" alt="${event.title}" class="timeline-img">
-            <p>${event.details}</p>
-        `;
-        modal.style.display = 'block';
+// Loading Screen
+document.addEventListener('DOMContentLoaded', () => {
+    // Ensure loading screen is visible
+    if (loadingScreen) {
+        loadingScreen.style.display = 'flex';
         document.body.style.overflow = 'hidden';
-    });
-});
-
-// Close Modal
-closeModal.addEventListener('click', () => {
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-});
-
-window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
     }
 });
 
-// Smooth Scrolling for Navigation Links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+window.addEventListener('load', () => {
+    if (loadingScreen) {
+        setTimeout(() => {
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                startTypingAnimation();
+                initializeSkillBars();
+            }, 500);
+        }, 1000);
+    }
+});
+
+// Typing Animation
+function startTypingAnimation() {
+    if (heroText) {
+        const text = "Cybersecurity Student & Security Enthusiast";
+        let index = 0;
+        heroText.textContent = '';
+
+        function typeText() {
+            if (index < text.length) {
+                heroText.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeText, 100);
+            }
+        }
+
+        typeText();
+    }
+}
+
+// Skill Bars Animation
+function initializeSkillBars() {
+    skillBars.forEach(bar => {
+        const width = bar.getAttribute('data-width');
+        bar.style.width = '0%';
+        setTimeout(() => {
+            bar.style.width = width + '%';
+        }, 200);
+    });
+}
+
+// Project Filtering
+projectFilters.forEach(filter => {
+    filter.addEventListener('click', () => {
+        // Update active state
+        projectFilters.forEach(f => f.classList.remove('active', 'gradient-bg', 'text-white'));
+        filter.classList.add('active', 'gradient-bg', 'text-white');
+
+        const category = filter.getAttribute('data-filter');
+
+        // Filter projects
+        projectCards.forEach(card => {
+            const cardCategory = card.getAttribute('data-category');
+            if (category === 'all' || category === cardCategory) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
         });
     });
 });
 
-// Reveal Text Animation for Love Letter
+// Mobile Menu
+if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+            mobileMenu.classList.add('hidden');
+        }
+    });
+
+    // Close menu when clicking on a link
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+    });
+}
+
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Contact Form
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        
+        // Disable button and show loading state
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending...';
+
+        try {
+            // Simulate form submission
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // Show success state
+            submitBtn.innerHTML = '<i class="fas fa-check mr-2"></i> Message Sent!';
+            submitBtn.classList.remove('gradient-bg');
+            submitBtn.classList.add('bg-green-500');
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Reset button after 3 seconds
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                submitBtn.classList.add('gradient-bg');
+                submitBtn.classList.remove('bg-green-500');
+            }, 3000);
+        } catch (error) {
+            // Show error state
+            submitBtn.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> Error! Try Again';
+            submitBtn.classList.remove('gradient-bg');
+            submitBtn.classList.add('bg-red-500');
+            
+            // Reset button after 3 seconds
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                submitBtn.classList.add('gradient-bg');
+                submitBtn.classList.remove('bg-red-500');
+            }, 3000);
+        }
+    });
+}
+
+// Update copyright year
+if (yearSpan) {
+    yearSpan.textContent = new Date().getFullYear();
+}
+
+// Intersection Observer for scroll animations
 const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
 };
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
+            entry.target.classList.add('animate-fade-in');
+            observer.unobserve(entry.target);
         }
     });
 }, observerOptions);
 
-document.querySelectorAll('.reveal-text').forEach(text => {
-    observer.observe(text);
-});
-
-// Update Footer Year
-document.querySelector('.year').textContent = new Date().getFullYear(); 
+// Observe sections for fade-in animation
+document.querySelectorAll('section').forEach(section => {
+    section.style.opacity = '0';
+    observer.observe(section);
+}); 
