@@ -18,6 +18,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
+function sendMail() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
+
+    const subject = encodeURIComponent(`Message from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}%0AEmail: ${email}%0A%0A${message}`);
+
+    window.location.href = `mailto:hi@atulkhanal.com.np?subject=${subject}&body=${body}`;
+}
+
+
 window.addEventListener('load', () => {
     if (loadingScreen) {
         setTimeout(() => {
