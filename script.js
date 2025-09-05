@@ -95,32 +95,6 @@ projectFilters.forEach(filter => {
         });
     });
 });
-const video = document.getElementById('video');
-const playPause = document.getElementById('play-pause');
-const progress = document.getElementById('progress');
-
-// Play or pause the video
-playPause.addEventListener('click', () => {
-  if (video.paused || video.ended) {
-    video.play();
-    playPause.textContent = '❚❚'; // Pause icon
-  } else {
-    video.pause();
-    playPause.textContent = '►'; // Play icon
-  }
-});
-
-// Update progress bar as video plays
-video.addEventListener('timeupdate', () => {
-  progress.value = Math.floor(video.currentTime);
-  progress.max = Math.floor(video.duration);
-});
-
-// Seek video position
-progress.addEventListener('input', () => {
-  video.currentTime = progress.value;
-});
-
 
 // Mobile Menu
 if (menuBtn && mobileMenu) {
@@ -231,3 +205,4 @@ document.querySelectorAll('section').forEach(section => {
     observer.observe(section);
 
 }); 
+
